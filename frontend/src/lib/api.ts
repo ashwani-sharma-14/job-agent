@@ -11,7 +11,7 @@ export interface Job {
     is_analyzed?: boolean;
 }
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://job-agent-ueu6.onrender.com";
 
 export async function fetchJobs(): Promise<Job[]> {
     const res = await fetch(`${API_BASE}/jobs`, { cache: 'no-store' });
