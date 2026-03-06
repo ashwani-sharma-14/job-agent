@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: jobagent-backend
+    env: docker
+    region: frankfurt # Or your preferred region
+    plan: free
+    dockerCommand: "uvicorn app.main:app --host 0.0.0.0 --port 10000" # Render sets PORT dynamically, but Uvicorn needs a binding
+    envVars:
+      - key: DATABASE_URL
+        sync: false # You will input this manually in the Render dashboard
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      - key: ADZUNA_APP_ID
+        sync: false
+      - key: ADZUNA_APP_KEY
+        sync: false
+      - key: RAPIDAPI_KEY
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: GOOGLE_DRIVE_RESUME_URL
+        sync: false
+      - key: DAILY_JOB_LIMIT
+        value: "400"
+      - key: LLM_RPM_LIMIT
+        value: "25"
+      - key: LLM_DAILY_LIMIT
+        value: "14000"
