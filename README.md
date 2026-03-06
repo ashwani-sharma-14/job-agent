@@ -123,12 +123,25 @@ LLM_DAILY_LIMIT="14000"
 
 ## ☁️ Deployment
 
-### Backend (Render)
+### Backend (Render.com)
 
 Because JobAgent uses Playwright headless browsers to apply to jobs, it requires a persistent container.
 
-1. Link this repository to **Render.com** as a Blueprint.
+**Option 1: 1-Click Deployment (Recommended)**
+
+1. Link this repository to **Render.com** by clicking "New" -> "Blueprint".
 2. Render will automatically read `render.yaml` and the `Dockerfile` to deploy the background worker securely on the free tier.
+
+**Option 2: Manual Web Service Setup**
+If you prefer setting it up manually without the Blueprint:
+
+1. On Render, click **New** -> **Web Service**
+2. Connect your GitHub repository.
+3. Select Language: **Docker**
+4. Root Directory: `backend`
+5. Branch: `main`
+6. Click **Advanced** and add all the environment variables from your `.env` file.
+7. Click **Create Web Service**. Render will automatically use the provided `Dockerfile` to build the Chromium Playwright environment and start your FastAPI app!
 
 ### Frontend (Vercel)
 
