@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 
-from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.models import Job, Application, JobNotification
@@ -40,7 +39,6 @@ async def process_application(job: Job, db: AsyncSession) -> dict:
         db.add(application)
         await db.flush()
 
-        logger.info("Emailed HR at {} for '{}' at {} — sent: {}", hr_email, job.title, job.company, sent)
         return {"status": "emailed_hr", "job": job.title, "hr_email": hr_email, "sent": sent}
 
     requires_login = False
@@ -68,7 +66,6 @@ async def process_application(job: Job, db: AsyncSession) -> dict:
         if sent:
             notification.notification_sent = True
 
-        logger.info("Job '{}' requires manual apply — notification sent: {}", job.title, sent)
         return {"status": "requires_manual_apply", "job": job.title, "notified": sent}
 
     tailored_resume = await rewrite_resume(job.job_description or "")
@@ -88,5 +85,4 @@ async def process_application(job: Job, db: AsyncSession) -> dict:
     db.add(application)
     await db.flush()
 
-    logger.info("Application for '{}': {}", job.title, application.status)
     return {"status": application.status, "job": job.title}
